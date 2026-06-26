@@ -1,6 +1,7 @@
 {
   "name": "midi2edgelist",
   "version": "1.0.0",
+  "type": "module",
   "description": "Convert midi files in edgelists",
   "main": "index.js",
   "scripts": {
@@ -26,13 +27,5 @@
     "fs-extra": "^11.1.1",
     "fs-stream-sync": "^2.0.18",
     "klaw-sync": "^6.0.0"
-  },
-  "devDependencies": {
-    "eslint": "^8.40.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0"
   }
 }

@@ -1,0 +1,59 @@
+1. Intra-song similarity
+Mean ≈ 0.95
+Min ≈ -0.78
+Max ≈ 1.00
+✅ ตีความ
+ค่าเฉลี่ย 0.95 = สูงมาก
+👉 แปลว่า model จับ “เพลงเดียวกันต่าง key” ได้ดี
+→ มีความเป็น transposition-invariant สูง
+⚠️ แต่มีจุดผิดปกติ
+Min = -0.78 (ติดลบแรงมาก)
+
+👉 แปลว่า:
+
+บาง transpose ของเพลงเดียวกัน → embedding “คนละโลกเลย”
+ซึ่ง ไม่ควรเกิด ถ้า model ดีจริง
+🔥 Insight
+
+model โดยรวมดี แต่ “ไม่ stable”
+
+📊 2. Inter-song similarity
+Mean ≈ 0.29
+Min ≈ -0.98
+Max ≈ 0.999999
+✅ ตีความ
+Mean ~0.29 → ถือว่าโอเค (แยกเพลงได้ระดับหนึ่ง)
+❗ ปัญหาใหญ่ (สำคัญมาก)
+Max ≈ 1.0 (เกือบ 1)
+
+👉 แปลว่า:
+
+มี “คนละเพลง” ที่ embedding เหมือนกันเป๊ะ
+
+🔥 นี่คือ red flag ใหญ่
+
+เชื่อมกับที่คุณวิเคราะห์ก่อนหน้า:
+
+👉 Graph leakage / shared node problem
+
+เช่น:
+
+tempo node
+chord pattern
+note group shared
+
+👉 ทำให้:
+
+song A → shared node → song B
+
+GraphSAGE → aggregate → embedding เหมือนกัน
+
+📊 3. Top-1 Hit Rate
+0.6759 ≈ 67.6%
+✅ ตีความ
+มีประมาณ 2 ใน 3 ที่หาเพื่อนบ้านถูก
+แต่ 1 ใน 3 ผิด
+
+👉 สำหรับ task นี้:
+
+ยัง “ไม่ดีพอสำหรับ thesis ที่ต้องการ robustness”

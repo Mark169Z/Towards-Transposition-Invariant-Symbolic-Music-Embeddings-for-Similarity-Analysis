@@ -1,6 +1,11 @@
 /* eslint no-use-before-define: "off" */
+// import fs from 'fs-extra';
+// import * as midilib from '@tonejs/midi';
 import fs from 'fs-extra';
-import * as midilib from '@tonejs/midi';
+import pkg from '@tonejs/midi';
+
+
+const { Midi: ToneMidi } = pkg;
 
 let ROOT_FOLDER = '';
 const MAP_FILENAMES = [];
@@ -12,7 +17,7 @@ export default class Midi {
     this.file = file;
     this.id = filename2id(file);
 
-    const midi = new midilib.Midi(fs.readFileSync(this.file));
+    const midi = new ToneMidi(fs.readFileSync(this.file));
     // fs.writeJsonSync(`json/${this.id}.json`, midi);
     this.tracks = midi.tracks.filter((t) => t.notes.length);
     this.header = midi.header;
@@ -66,7 +71,9 @@ export default class Midi {
       //   "duration": 0.5576922333333325
       // }
 
-      const pitches = unique(curnotes.map((x) => x.midi)).sort();
+      const absPitches = unique(curnotes.map((x) => x.midi)).sort();
+      const firstPitch = absPitches[0];
+      const pitches = absPitches.map(p => p - firstPitch);
       if (!pitches.length) return null;
 
       let maxduration = Math.max(...curnotes.map((n) => n.duration));
@@ -75,14 +82,14 @@ export default class Midi {
       let velocity = average(curnotes.map((x) => x.velocity));
       velocity = Math.round(velocity * 10);
 
-      const id = `g${hashCode(`${pitches.join(':')}|${maxduration}`)}`;
+      const id = `g${hashCode(`${pitches.join(':')}|${maxduration}|${velocity}`)}`;
       // console.log(id, curtime, maxduration, pitches);
 
       return {
         id,
         duration: `dur:${maxduration}`,
         velocity: `vel:${velocity}`,
-        pitches: pitches.flat().map((p) => `http://purl.org/midi-ld/notes/${p}`),
+        pitches: pitches.flat().map((p) => `http://purl.org/midi-ld/notes_rel/${p}`)
       };
     }).filter((x) => x != null);
   }

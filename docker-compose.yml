@@ -1,0 +1,7 @@
+services:
+  midi2vec:
+    build: .
+    working_dir: /app
+    volumes:
+      - .:/app
+    tty: true
