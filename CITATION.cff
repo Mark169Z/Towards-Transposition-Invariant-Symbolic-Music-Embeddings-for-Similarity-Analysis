@@ -27,3 +27,17 @@ preferred-citation:
   volume: 13,
   issn: "2210-4968"
 
+references:
+  - type: conference-paper
+    title: "Inductive Representation Learning on Large Graphs"
+    authors:
+      - family-names: "Hamilton"
+        given-names: "William L."
+      - family-names: "Ying"
+        given-names: "Rex"
+      - family-names: "Leskovec"
+        given-names: "Jure"
+    year: 2017
+    conference:
+      name: "Advances in Neural Information Processing Systems"
+    url: "https://arxiv.org/abs/1706.02216"
