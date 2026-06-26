@@ -11,7 +11,9 @@ This repository extends the original **MIDI2vec** project by adding a GraphSAGE-
 
 # Citation
 
-If you use this repository in your research, please cite the original **MIDI2vec** paper.
+This repository builds upon the original **MIDI2vec** framework by Lisena et al. and extends it with relative-pitch graph representations and a **GraphSAGE-based embedding pipeline**.
+
+If you use the original MIDI2vec methodology, please cite the following paper:
 
 ```bibtex
 @article{lisena2022midi2vec,
@@ -125,12 +127,12 @@ python edgelist2vec/embed.py \
 ## Export song vectors
 
 ```bash
-python make_names_emb_from_midi.py \
+python export_vector/make_names_emb_from_midi.py \
     --midi_root midi \
     --emb embeddings/embedding.bin \
     --out edgelist_file/names_emb.csv
 
-python export_song_vectors.py \
+python export_vector/export_song_vectors.py \
     --names edgelist_file/names_emb.csv \
     --emb embeddings/embedding.bin \
     --out embeddings/song_vectors.csv
