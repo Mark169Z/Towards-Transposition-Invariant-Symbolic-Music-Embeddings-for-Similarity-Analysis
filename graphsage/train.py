@@ -233,7 +233,7 @@ def main():
 
     model.eval()
     with torch.no_grad():
-        z = model(x, train_edge_index)
+        z = model(x, full_edge_index.to(device))
 
     out_dir = Path(args.out_dir)
     export_song_vectors(
