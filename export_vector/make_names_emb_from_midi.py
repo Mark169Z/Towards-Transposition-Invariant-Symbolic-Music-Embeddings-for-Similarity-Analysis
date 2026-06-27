@@ -39,16 +39,17 @@ kv = KeyedVectors.load_word2vec_format(EMB, binary=False)
 
 # ดึงเฉพาะ key ที่เป็น "เพลง" (เริ่มด้วย - และลงท้าย _kตัวเลข)
 all_keys = kv.key_to_index.keys() if hasattr(kv, "key_to_index") else kv.vocab.keys()
-song_keys = [k for k in all_keys if re.search(r"_k\d+$", k)]
+song_keys = [k for k in all_keys if re.search(r"_k\d+\.midi?$", k, re.IGNORECASE)]
 print("[INFO] song_keys in embedding:", len(song_keys))
 
 # ทำ index: (knum, normalized key without _knum) -> full key
 index = {}
 for k in song_keys:
     kk = tail_song_key(k)  # <-- เพิ่มบรรทัดนี้
-    m = re.search(r"_k(\d+)$", kk)
+    m = re.search(r"_k(\d+)\.midi?$", kk, re.IGNORECASE)
     knum = m.group(1)
-    base = kk[: -(len("_k") + len(knum))]
+    kk = re.sub(r"\.midi?$", "", kk, flags=re.IGNORECASE)
+    base = re.sub(r"_k\d+$", "", kk, flags=re.IGNORECASE)
     index[(knum, norm(base))] = k  # <-- เก็บค่าเดิม k ไว้ (full key)
 
 rows = []
@@ -111,6 +112,6 @@ if missing:
         print("cand2 :", c2)
         print("cand3 :", c3)
         # ลองโชว์ key ใน embedding ที่มี knum เดียวกันและคล้าย folder (แบบหยาบ)
-        sample = [k for k in song_keys if k.endswith(f"_k{knum}") and norm(folder) in norm(k)][:5]
+        sample = [k for k in song_keys if k.endswith(f"_k{knum}.mid") and norm(folder) in norm(k)][:5]
         print("embed sample:", sample)
         print("---")

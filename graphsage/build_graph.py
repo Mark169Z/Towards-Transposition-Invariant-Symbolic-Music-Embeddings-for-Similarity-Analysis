@@ -3,11 +3,12 @@ import csv
 import re
 from pathlib import Path
 import pandas as pd
-from typing import Dict, List, Tuple
+from typing import Union, List, Tuple
+from pathlib import Path
 
 import torch
 
-def export_debug_tables(data: dict, out_dir: str | Path):
+def export_debug_tables(data: dict, out_dir: Union[str, Path]):
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -243,7 +244,7 @@ if __name__ == "__main__":
     base = Path("edgelist_file")
     data = build_graph_data(
         edgelist_dir=str(base),
-        names_csv=str(base / "names.csv")
+        names_csv=str(base / "names_emb.csv")
     )
 
     

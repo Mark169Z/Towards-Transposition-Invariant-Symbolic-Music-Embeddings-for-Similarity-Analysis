@@ -12,7 +12,6 @@ import torch.nn.functional as F
 from build_graph import build_graph_data, export_debug_tables
 from model import GraphSAGE
 
-
 def unique_undirected_edges(edge_index: torch.Tensor):
     src = edge_index[0].tolist()
     dst = edge_index[1].tolist()
@@ -128,8 +127,8 @@ def export_song_vectors(out_dir: Path, z: torch.Tensor, song_ids, song_node_indi
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--input", type=str, default="edgelist_file", help="Folder containing .edgelist and names.csv")
-    ap.add_argument("--names", type=str, default=None, help="Optional path to names.csv")
+    ap.add_argument("--input", type=str, default="edgelist_file", help="Folder containing .edgelist and names_emb.csv")
+    ap.add_argument("--names", type=str, default=None, help="Optional path to names_emb.csv")
     ap.add_argument("--out_dir", type=str, default="embeddings", help="Output directory")
     ap.add_argument("--hidden_dim", type=int, default=128)
     ap.add_argument("--out_dim", type=int, default=100)
@@ -146,7 +145,7 @@ def main():
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
 
-    names_csv = args.names or os.path.join(args.input, "names.csv")
+    names_csv = args.names or os.path.join(args.input, "names_emb.csv")
     data = build_graph_data(
         edgelist_dir=args.input,
         names_csv=names_csv,
