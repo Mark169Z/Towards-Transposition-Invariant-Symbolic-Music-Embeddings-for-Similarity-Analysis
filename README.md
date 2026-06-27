@@ -96,6 +96,7 @@ Both workflows share the same preprocessing step.
 
 ```bash
 cd midi2edgelist
+npm install
 node index.js -i ../midi -o ../edgelist_file
 cd ..
 ```
